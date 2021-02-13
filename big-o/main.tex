@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{pgf, tikz}
+\usepackage{textgreek}
+\usepackage{xparse}
+% \usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+% \usepackage{forest}
+
+\newcommand{\dividingline}[1]{\par\noindent\rule{\textwidth}{#1}}
+\NewDocumentCommand{\nrt}{O{-2}O{2}mm}{\sqrt[\leftroot{#1}\uproot{#2}#3]{#4}}
+
+\usetikzlibrary{arrows, automata}
+
+\geometry{letterpaper, margin=1in}
+\graphicspath{{img/}}
+
+\title{}
+\author{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Example 1: Foo}
+Operations:\\
+1 - Assignment, Addition, Return\\
+0 - For loop overhead\\
+$$i=1,2,4,8,\ldots,n$$
+$$f(i)=0,1,2,3,4,\ldots,?=\log_2i$$
+$$n=9:i=1,2,4,8,16$$
+$$0,1,2,3,\ldots,\lceil\log_2n\rceil$$
+
+$$1+\sum_{i=0}^{\lceil\log_2n\rceil}\left(2+\sum_{j=0}^{n-1}\left(2+\sum_{k=0}^{j-1}\left(2\right)\right)\right)+1$$
+$$2+\sum_{i=0}^{\lceil\log_2n\rceil}\left(2+\sum_{j=0}^{n-1}\left(2+\sum_{k=0}^{j-1}\left(2\right)\right)\right)$$
+$$2+\sum_{i=0}^{\lceil\log_2n\rceil}\left(2+\sum_{j=0}^{n-1}\left(2+2\cdot\sum_{k=0}^{j-1}\left(1\right)\right)\right)$$
+$$2+\sum_{i=0}^{\lceil\log_2n\rceil}\left(2+2\cdot\sum_{j=0}^{n-1}\left(1+\sum_{k=0}^{j-1}\left(1\right)\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\sum_{j=0}^{n-1}\left(1+\sum_{k=0}^{j-1}\left(1\right)\right)\right)$$
+Rules for Summations:
+$$\sum_{k=a}^{b}1=b-a+1$$
+$$\sum_{k=0}^{n}k=\sum_{k=1}^{n}k=\frac{n\left(n+1\right)}{2}$$
+$$0+1+2+\cdots+n=1+2+\cdots+n=\frac{n\left(n+1\right)}{2}$$
+$$\sum_{k=a}^{b}\left(f(k)+g(k)\right)=\sum_{k=a}^{b}\left(f(k)\right)+\sum_{k=a}^{b}\left(g(k)\right)$$
+Back to the problem:
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\sum_{j=0}^{n-1}\left(1+\sum_{k=0}^{j-1}\left(1\right)\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\sum_{j=0}^{n-1}\left(1+\left(\left(j-1\right)-\left(0\right)+1\right)\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\sum_{j=0}^{n-1}\left(1+\left(j\right)\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\sum_{j=0}^{n-1}\left(1\right)+\sum_{j=0}^{n-1}\left(j\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\left(n-1-0+1\right)+\sum_{j=0}^{n-1}\left(j\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\left(n\right)+\sum_{j=0}^{n-1}\left(j\right)\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\left(n\right)+\frac{\left(n-1\right)\left(n+1-1\right)}{2}\right)$$
+$$2+2\sum_{i=0}^{\lceil\log_2n\rceil}\left(1+\left(n\right)+\frac{\left(n-1\right)n}{2}\right)$$
+$$2+2\left(\sum_{i=0}^{\lceil\log_2n\rceil}\left(1\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(n\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(\frac{\left(n-1\right)n}{2}\right)\right)$$
+$$2+2\left(\left(\lceil\log_2n\rceil-0+1\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(n\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(\frac{\left(n-1\right)n}{2}\right)\right)$$
+$$2+2\left(\left(\lceil\log_2n\rceil+1\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(n\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(\frac{\left(n-1\right)n}{2}\right)\right)$$
+$$2+2\left(\left(\lceil\log_2n\rceil+1\right)+n\cdot\sum_{i=0}^{\lceil\log_2n\rceil}\left(1\right)+\sum_{i=0}^{\lceil\log_2n\rceil}\left(\frac{\left(n-1\right)n}{2}\right)\right)$$
+$$2+2\left(\left(\lceil\log_2n\rceil+1\right)+n\cdot\sum_{i=0}^{\lceil\log_2n\rceil}\left(1\right)+\frac{\left(n-1\right)n}{2}\cdot\sum_{i=0}^{\lceil\log_2n\rceil}\left(1\right)\right)$$
+$$2+2\left(\left(\lceil\log_2n\rceil+1\right)+n\cdot\left(\lceil\log_2n\rceil+1\right)+\frac{\left(n-1\right)n}{2}\left(\lceil\log_2n\rceil+1\right)\right)$$
+$$O(n^2\log n)$$
+Rule for Logarithms, why Log-Base doesn't matter in Big O.
+$$\frac{\log n}{\log 2}=\log_2 n$$
+$$\frac{1}{\log 2}=c$$
+
+
+% \[
+%     1+\sum_{i=0}^{n - 1}\left(2+\sum_{j=i}^{n-1}\left(1+2\right)\right)+1
+% \]
+% \[
+%     =2+\sum_{i=0}^{n - 1}\left(2+\sum_{j=i}^{n-1}\left(3\right)\right)
+% \]
+% \[
+%     =2+\sum_{i=0}^{n - 1}\left(2+3\sum_{j=i}^{n-1}\left(1\right)\right)
+% \]
+% \begin{equation}
+%     \sum_{k=a}^{b}1=b-a+1
+% \end{equation}
+% \[
+%     =2+\sum_{i=0}^{n - 1}\left(2+3\left(\left(n-1\right)-\left(i\right)+1\right)\right)
+% \]
+% \[
+%     =2+\sum_{i=0}^{n - 1}\left(2+3\left(n-i\right)\right)
+% \]
+% \[
+%     =2+\sum_{i=0}^{n - 1}\left(2+3n-3i\right)
+% \]
+% \[
+%     =2+\sum_{i=0}^{n - 1}\left(2\right)+\sum_{i=0}^{n - 1}\left(3n\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2\sum_{i=0}^{n - 1}\left(1\right)+\sum_{i=0}^{n - 1}\left(3n\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2\left(n-1-0+1\right)+\sum_{i=0}^{n - 1}\left(3n\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2n+\sum_{i=0}^{n - 1}\left(3n\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2n+3\sum_{i=0}^{n - 1}\left(n\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2n+3n\sum_{i=0}^{n - 1}\left(1\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2n+3n\left(n-1-0+1\right)-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2n+3n^2-\sum_{i=0}^{n - 1}\left(3i\right)
+% \]
+% \[
+%     =2+2n+3n^2-3\sum_{i=0}^{n - 1}\left(i\right)
+% \]
+% \begin{equation}
+%     \sum_{k=0}^{n}k=\sum_{k=1}^{n}k=\frac{n\left(n+1\right)}{2}
+% \end{equation}
+% $$0+1+2+\cdots+n=1+2+\cdots+n$$
+% \[
+%     =2+2n+3n^2-3\frac{n(n-1)}{2}
+% \]
+% \[
+%     =2+2n+3n^2-3\frac{n^2-n}{2}
+% \]
+% \[
+%     \lim_{n\rightarrow\infty}\left|\frac{2+2n+3n^2-3\frac{n^2-n}{2}}{n^2}\right|=\frac{3}{2}\Rightarrow\text{constant, so we know }2+2n+3n^2-3\frac{n^2-n}{2}\in O(n^2)
+% \]
+% % \[
+% %     \lim_{n\rightarrow\infty}\left|\frac{2+2n+3n^2-3\frac{n^2-n}{2}}{n^3}\right|=0
+% % \]
+% % \[
+% %     \lim_{n\rightarrow\infty}\left|\frac{2+2n+3n^2-3\frac{n^2-n}{2}}{n}\right|=\infty
+% % \]
+% \[
+%     \in O(n^2)
+% \]
+
+\end{document}
