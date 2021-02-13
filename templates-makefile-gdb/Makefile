@@ -10,7 +10,7 @@ main.o: main.cpp Base.h Derived.h
 	g++ -Wall -Wextra -pedantic -Weffc++ -g -O0 -std=c++2a -c main.cpp
 
 a.out: Base.o main.o Derived.o
-	g++ -Wall -Wextra -pedantic -Weffc++ -g -O0 -std=c++2a *.o
+	g++ -Wall -Wextra -pedantic -Weffc++ -g -O0 -std=c++2a Base.o main.o Derived.o
 
 run: all
 	./a.out
